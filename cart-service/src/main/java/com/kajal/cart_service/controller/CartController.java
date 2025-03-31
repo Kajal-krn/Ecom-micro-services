@@ -26,7 +26,6 @@ public class CartController {
             CartResponse cart = cartService.getCartByUserId(userId);
             return new ResponseEntity<>(cart, HttpStatus.OK);
         }catch (RuntimeException e){
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -37,9 +36,31 @@ public class CartController {
         try{
             String userId = authService.getUserIdWithValidation(request);
             CartResponse cart = cartService.addToCart(cartItemRequest, userId);
-            return new ResponseEntity<>(cart, HttpStatus.OK);
+            return new ResponseEntity<>(cart, HttpStatus.ACCEPTED);
         }catch (RuntimeException e){
-            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateCart(
+            @RequestBody CartItemRequest cartItemRequest, HttpServletRequest request) {
+        try{
+            String userId = authService.getUserIdWithValidation(request);
+            CartResponse cart = cartService.updateCart(cartItemRequest, userId);
+            return new ResponseEntity<>(cart, HttpStatus.ACCEPTED);
+        }catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/clear")
+    public ResponseEntity<?> clearCart(HttpServletRequest request) {
+        try{
+            String userId = authService.getUserIdWithValidation(request);
+            CartResponse cart = cartService.clearCart(userId);
+            return new ResponseEntity<>(cart, HttpStatus.ACCEPTED);
+        }catch (RuntimeException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -78,6 +78,50 @@ public class CartService {
         return mapCartToResponse(cart);
     }
 
+    public CartResponse updateCart(CartItemRequest cartItemRequest, String userId){
+        Cart cart = fetchCartFromUserId(userId);
+        Optional<CartItem> cartItemOptional = cartItemRepository.findByProductIdAndCart_Id(
+                cartItemRequest.getProductId(), cart.getId()
+        );
+
+        if (cartItemOptional.isPresent()) {
+            CartItem cartItem = cartItemOptional.get();
+            cartItem.setQuantity(cartItemRequest.getQuantity());
+
+            if (cartItemRequest.getQuantity() == 0) {
+                cartItemRepository.deleteById(cart.getId());
+                cart.removeCartItem(cartItem);
+            }
+
+            cartItemRepository.save(cartItem);
+        }
+        cart = fetchCartFromUserId(userId);
+        return mapCartToResponse(cart);
+    }
+
+    public CartResponse clearCart(String userId){
+        Cart cart = fetchCartFromUserId(userId);
+        cart.clearCartItems();
+        cartItemRepository.deleteAllByCart_Id(cart.getId());
+        cartRepository.save(cart);
+
+        cart = fetchCartFromUserId(userId);
+        return mapCartToResponse(cart);
+    }
+
+    public Cart fetchCartFromUserId(String userId){
+        Optional<Cart> existingCartOptional =  cartRepository.findByUserId(userId);
+
+        if(existingCartOptional.isPresent()){
+            return existingCartOptional.get();
+        }
+
+        Cart cart = new Cart();
+        cart.setUserId(userId);
+        cart = cartRepository.save(cart);
+        return cart;
+    }
+
     private CartResponse mapCartToResponse(Cart cart) {
         List<CartItemResponse> cartItemsResponse = cart.getCartItems().stream().map(this::mapCartItemsToResponse).toList();
         return new CartResponse(

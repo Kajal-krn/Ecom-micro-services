@@ -1,14 +1,10 @@
 package com.kajal.product_service.controller;
 
-
 import com.kajal.product_service.dto.ProductRequest;
 import com.kajal.product_service.dto.ProductResponse;
 import com.kajal.product_service.dto.ProductUpdateRequest;
-import com.kajal.product_service.entity.Product;
 import com.kajal.product_service.service.ProductService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
