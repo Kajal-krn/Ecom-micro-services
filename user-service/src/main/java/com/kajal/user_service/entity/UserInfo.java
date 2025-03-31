@@ -1,5 +1,8 @@
 package com.kajal.user_service.entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,24 +11,32 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class UserInfo implements UserDetails {
-    private User user;
+    private String id;
+    private String email;
+    private String userName;
+    private String password;
+    private UserRole roles;
 
-    public UserInfo(User user){
-        this.user = user;
+    public UserInfo(String id, String email, String userName, String password, UserRole roles){
+        this.id = id;
+        this.email = email;
+        this.userName = userName;
+        this.password = password;
+        this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRoles().name()));
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + roles.name()));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return userName;
     }
 }

@@ -8,6 +8,7 @@ import com.kajal.user_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -52,19 +53,18 @@ public class UserService {
     public String loginUser(UserLoginRequest userLoginRequest) {
         try {
             String userName = userLoginRequest.getUserName();
-            System.out.println("here " +  userName);
             Authentication authentication =
                     authenticationManager.authenticate(
                             new UsernamePasswordAuthenticationToken(userLoginRequest.getUserName(), userLoginRequest.getPassword()));
-            System.out.println("here " +  authentication);
             if (authentication.isAuthenticated()) {
                 User user = userRepository.findByUserName(userName);
                 return authService.generateToken(user.getUserName(), user.getId());
             } else {
                 throw new RuntimeException("Authentication failed");
             }
+        } catch (BadCredentialsException e){
+            throw new RuntimeException("Bad Creds", e);
         } catch (RuntimeException e) {
-            e.printStackTrace();
             throw new RuntimeException("Invalid username or password", e);
         }
     }
