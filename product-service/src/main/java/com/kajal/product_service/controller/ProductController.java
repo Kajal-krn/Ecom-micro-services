@@ -1,10 +1,10 @@
-package com.kajal.controller;
+package com.kajal.product_service.controller;
 
 
-import com.kajal.dto.ProductRequest;
-import com.kajal.dto.ProductUpdateRequest;
-import com.kajal.entity.Product;
-import com.kajal.service.ProductService;
+import com.kajal.product_service.dto.ProductRequest;
+import com.kajal.product_service.dto.ProductUpdateRequest;
+import com.kajal.product_service.entity.Product;
+import com.kajal.product_service.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

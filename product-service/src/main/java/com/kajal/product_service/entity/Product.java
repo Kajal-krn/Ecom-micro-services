@@ -1,4 +1,4 @@
-package com.kajal.entity;
+package com.kajal.product_service.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;

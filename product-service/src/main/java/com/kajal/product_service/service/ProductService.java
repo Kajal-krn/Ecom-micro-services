@@ -1,9 +1,9 @@
-package com.kajal.service;
+package com.kajal.product_service.service;
 
-import com.kajal.dto.ProductRequest;
-import com.kajal.dto.ProductUpdateRequest;
-import com.kajal.entity.Product;
-import com.kajal.repository.ProductRepository;
+import com.kajal.product_service.dto.ProductRequest;
+import com.kajal.product_service.dto.ProductUpdateRequest;
+import com.kajal.product_service.entity.Product;
+import com.kajal.product_service.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

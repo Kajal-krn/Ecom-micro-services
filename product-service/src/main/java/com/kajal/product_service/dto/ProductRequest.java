@@ -1,4 +1,4 @@
-package com.kajal.dto;
+package com.kajal.product_service.dto;
 
 import lombok.*;
 
