@@ -22,19 +22,18 @@ public class Product {
     private String id;
 
     @Indexed
-    @NotBlank(message = "Name is mandatory")
-    @Size(max = 100, message = "Name should not exceed 100 characters")
+    @NotBlank(message = "Invalid Name")
     private String name;
 
-    @Size(max = 50000, message = "Description should not exceed 500 characters")
+    @NotBlank(message = "Invalid Description")
     private String description;
 
     @Indexed
-    @NotNull(message = "Price is mandatory")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than zero")
+    @NotNull(message = "Invalid Price")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price > 0")
     private double price;
 
-    @Min(value = 0, message = "Stock quantity must be zero or greater")
+    @Min(value = 0, message = "Stock >= 0")
     private int stockQuantity;
 
     public Product(String name, String description, double price, int stockQuantity) {
