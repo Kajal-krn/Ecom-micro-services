@@ -12,13 +12,16 @@ public class User {
     @Id
     private String id;
 
-    @NotNull(message = "Invalid Email")
+    @NotBlank(message = "Invalid Email")
+    @NotNull
     private String email;
 
     @NotBlank(message = "Invalid Username")
+    @NotNull
     private String userName;
 
     @NotBlank(message = "Invalid password")
+    @NotNull
     private String password;
 
     @Field("roles")
